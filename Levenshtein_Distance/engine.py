@@ -9,6 +9,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from rapidfuzz import distance as rf_distance
+
 
 TEXT_SIMILARITY = "text_similarity"
 EXACT_MATCH = "exact_match"
@@ -175,26 +177,6 @@ def normalize_phone(value: Any) -> str:
     return str(value or "").strip()
 
 
-def levenshtein_distance(left: str, right: str) -> int:
-    if left == right:
-        return 0
-    if not left:
-        return len(right)
-    if not right:
-        return len(left)
-
-    previous_row = list(range(len(right) + 1))
-    for left_index, left_char in enumerate(left, start=1):
-        current_row = [left_index]
-        for right_index, right_char in enumerate(right, start=1):
-            insertion_cost = current_row[right_index - 1] + 1
-            deletion_cost = previous_row[right_index] + 1
-            substitution_cost = previous_row[right_index - 1] + (left_char != right_char)
-            current_row.append(min(insertion_cost, deletion_cost, substitution_cost))
-        previous_row = current_row
-    return previous_row[-1]
-
-
 def text_similarity(left_value: Any, right_value: Any) -> float:
     left = normalize_text(left_value)
     right = normalize_text(right_value)
@@ -202,9 +184,8 @@ def text_similarity(left_value: Any, right_value: Any) -> float:
         return 1.0
     if not left or not right:
         return 0.0
-    distance = levenshtein_distance(left, right)
-    longest = max(len(left), len(right))
-    return max(0.0, 1.0 - (distance / longest))
+    
+    return rf_distance.Levenshtein.normalized_similarity(left, right)
 
 
 def parse_date(value: Any) -> tuple[datetime | None, str | None]:
