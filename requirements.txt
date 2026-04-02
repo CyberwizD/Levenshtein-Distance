@@ -1,2 +1,2 @@
-
 reflex==0.8.28.post1
+rapidfuzz>=3.0.0
