@@ -98,6 +98,7 @@ def underlined_input(value_bind, on_change_bind, placeholder="") -> rx.Component
         padding_y="0.5rem",
         font_size="1.1rem",
         width="100%",
+        height="5%",
     )
 
 def index() -> rx.Component:
@@ -159,13 +160,13 @@ def index() -> rx.Component:
                     rx.box(height="1rem"),
                     rx.vstack(
                         rx.text("FIRST NAME", size="1", color="#737373", letter_spacing="0.05em"), 
-                        underlined_input(SinglePageState.a_first_name, SinglePageState.set_a_first_name, "VALUE_01"), 
+                        underlined_input(SinglePageState.a_first_name, SinglePageState.set_a_first_name, "e.g. Jonathan"), 
                         width="100%", spacing="1"
                     ),
                     rx.box(height="1rem"),
                     rx.vstack(
                         rx.text("LAST NAME", size="1", color="#737373", letter_spacing="0.05em"), 
-                        underlined_input(SinglePageState.a_last_name, SinglePageState.set_a_last_name, "VALUE_02"), 
+                        underlined_input(SinglePageState.a_last_name, SinglePageState.set_a_last_name, "e.g. Muller"), 
                         width="100%", spacing="1"
                     ),
                     rx.box(height="1rem"),
@@ -177,7 +178,7 @@ def index() -> rx.Component:
                     rx.box(height="1rem"),
                     rx.vstack(
                         rx.text("GENDER", size="1", color="#737373", letter_spacing="0.05em"), 
-                        underlined_input(SinglePageState.a_gender, SinglePageState.set_a_gender, "M/F/O"), 
+                        underlined_input(SinglePageState.a_gender, SinglePageState.set_a_gender, "M/F"), 
                         width="100%", spacing="1"
                     ),
                     spacing="2",
@@ -191,13 +192,13 @@ def index() -> rx.Component:
                     rx.box(height="1rem"),
                     rx.vstack(
                         rx.text("FIRST NAME", size="1", color="#737373", letter_spacing="0.05em"), 
-                        underlined_input(SinglePageState.b_first_name, SinglePageState.set_b_first_name, "VALUE_01"), 
+                        underlined_input(SinglePageState.b_first_name, SinglePageState.set_b_first_name, "e.g. John"), 
                         width="100%", spacing="1"
                     ),
                     rx.box(height="1rem"),
                     rx.vstack(
                         rx.text("LAST NAME", size="1", color="#737373", letter_spacing="0.05em"), 
-                        underlined_input(SinglePageState.b_last_name, SinglePageState.set_b_last_name, "VALUE_02"), 
+                        underlined_input(SinglePageState.b_last_name, SinglePageState.set_b_last_name, "e.g. Miller"), 
                         width="100%", spacing="1"
                     ),
                     rx.box(height="1rem"),
@@ -209,7 +210,7 @@ def index() -> rx.Component:
                     rx.box(height="1rem"),
                     rx.vstack(
                         rx.text("GENDER", size="1", color="#737373", letter_spacing="0.05em"), 
-                        underlined_input(SinglePageState.b_gender, SinglePageState.set_b_gender, "M/F/O"), 
+                        underlined_input(SinglePageState.b_gender, SinglePageState.set_b_gender, "M/F"), 
                         width="100%", spacing="1"
                     ),
                     spacing="2",
