@@ -5,3 +5,5 @@ assets/external/
 __pycache__/
 *.py[cod]
 venv/
+uploaded_inputs/
+sample_output/
