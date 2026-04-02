@@ -24,6 +24,9 @@ class SinglePageState(rx.State):
     # Results
     has_results: bool = False
     aggregate_score: str = "0.0"
+    band: str = ""
+    verdict_title: str = ""
+    verdict_text: str = ""
     
     # List of dictionaries for the table
     results_list: list[dict[str, str]] = []
@@ -58,6 +61,16 @@ class SinglePageState(rx.State):
             return
 
         self.aggregate_score = f"{res.overall_score:.1f}"
+        self.band = res.band
+        if self.band == "High":
+            self.verdict_title = f"High Similarity ({res.overall_score:.0f}%)"
+            self.verdict_text = "The records likely refer to the same individual. The divergence in attributes is typical of common clerical transposition errors."
+        elif self.band == "Medium":
+            self.verdict_title = f"Moderate Similarity ({res.overall_score:.0f}%)"
+            self.verdict_text = "The records show moderate similarity. Some attributes match while others diverge significantly. Manual review is recommended."
+        else:
+            self.verdict_title = f"Low Similarity ({res.overall_score:.0f}%)"
+            self.verdict_text = "The records show low similarity and likely do not refer to the same individual. No significant matches found."
         
         rows = []
         for b in res.breakdowns:
@@ -270,16 +283,39 @@ def index() -> rx.Component:
                     
                     rx.divider(margin_top="3rem", margin_bottom="2rem", border_color="#1A1A1A"),
                     
-                    # Aggregate Score
-                    rx.vstack(
-                        rx.text("AGGREGATE SIMILARITY INDEX", color="#737373", font_size="0.75rem", letter_spacing="0.1em"),
-                        rx.hstack(
-                            rx.text(SinglePageState.aggregate_score, font_size="6rem", font_weight="300", line_height="1", color="#FAFAFA"),
-                            rx.text("%", font_size="2rem", color="#737373", align_self="end", padding_bottom="1rem"),
-                            spacing="2",
+                    # Verdict and Aggregate Score
+                    rx.hstack(
+                        # System Verdict Card
+                        rx.box(
+                            rx.vstack(
+                                rx.text("SUMMARY", color="#737373", font_size="0.75rem", letter_spacing="0.1em", font_weight="600"),
+                                rx.text(SinglePageState.verdict_title, color="#FAFAFA", font_weight="bold", font_size="1.5rem"),
+                                rx.text(SinglePageState.verdict_text, color="#A1A1AA", font_size="0.9rem", line_height="1.5", margin_bottom="0rem"),
+                                spacing="1",
+                                align_items="start"
+                            ),
+                            background="#131315",
+                            padding="2rem",
+                            border_radius="0px",
+                            border="1px solid #27272A",
+                            width="50%",
                         ),
+                        
+                        rx.spacer(),
+                        
+                        # Aggregate Score
+                        rx.vstack(
+                            rx.text("AGGREGATE SIMILARITY INDEX", color="#737373", font_size="0.75rem", letter_spacing="0.1em"),
+                            rx.hstack(
+                                rx.text(SinglePageState.aggregate_score, font_size="6rem", font_weight="300", line_height="1", color="#FAFAFA"),
+                                rx.text("%", font_size="2rem", color="#737373", align_self="end", padding_bottom="1rem"),
+                                spacing="2",
+                            ),
+                            align_items="end",
+                        ),
+                        
+                        width="100%",
                         align_items="end",
-                        width="100%"
                     ),
                     width="100%"
                 ),
