@@ -121,8 +121,8 @@ def index() -> rx.Component:
             rx.hstack(
                 rx.spacer(),
                 rx.button(
-                    rx.icon("upload", size=18), 
-                    "UPLOAD DATASET", 
+                    rx.icon("search", size=18), 
+                    "CHECK FOR SIMILARITY", 
                     variant="outline", 
                     color_scheme="gray", 
                     color="#A1A1AA", 
